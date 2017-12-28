@@ -1,9 +1,9 @@
-use mx_master_moneyman;
+USE mx_master_moneyman;
 
 CREATE TABLE bdc_ar (
   id                        BIGINT NOT NULL AUTO_INCREMENT,
   clave_opassword_erroneo   VARCHAR(255),
-  error_sistema         VARCHAR(255),
+  error_sistema_bc          VARCHAR(255),
   etiqueta_segmento_erronea VARCHAR(255),
   falta_campo_requerido     VARCHAR(255),
   referencia_operador       VARCHAR(255),
@@ -33,14 +33,14 @@ CREATE TABLE bdc_ur (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE bdc_caracteristicas(
-  id                     BIGINT NOT NULL AUTO_INCREMENT,
-  codigo_error           VARCHAR(255),
-  id_caracteristica      VARCHAR(255),
-  numero_caracteristica  VARCHAR(255),
-  plantilla              VARCHAR(255),
-  valor                  VARCHAR(255),
-  bdc_persona_id BIGINT,
+CREATE TABLE bdc_caracteristicas (
+  id                    BIGINT NOT NULL AUTO_INCREMENT,
+  codigo_error          VARCHAR(255),
+  id_caracteristica     VARCHAR(255),
+  numero_caracteristica VARCHAR(255),
+  plantilla             VARCHAR(255),
+  valor                 VARCHAR(255),
+  bdc_persona_id        BIGINT,
   PRIMARY KEY (id)
 );
 
@@ -58,12 +58,12 @@ CREATE TABLE bdc_consulta_efectuada (
   resultado_final                VARCHAR(255),
   telefono_otorgante             VARCHAR(255),
   tipo_contrato                  VARCHAR(255),
-  bdc_persona_id         BIGINT,
+  bdc_persona_id                 BIGINT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bdc_response (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id        BIGINT NOT NULL AUTO_INCREMENT,
   credit_id BIGINT NOT NULL,
   PRIMARY KEY (id)
 );
@@ -120,7 +120,19 @@ CREATE TABLE bdc_cuentas (
 CREATE TABLE bdc_declaraciones_cliente (
   id                     BIGINT NOT NULL AUTO_INCREMENT,
   declaracion_consumidor VARCHAR(255),
-  bdc_persona_id BIGINT,
+  bdc_persona_id         BIGINT,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE bdc_processing_result (
+  id                BIGINT NOT NULL AUTO_INCREMENT,
+  sql_error         TEXT,
+  mongo_error       TEXT,
+  sql_response_id   BIGINT,
+  mongo_response_id VARCHAR(255),
+  error             TEXT,
+  credit_id         BIGINT,
+
   PRIMARY KEY (id)
 );
 
@@ -141,11 +153,11 @@ CREATE TABLE bdc_direccion (
   numero_telefono              VARCHAR(255),
   tipo_domicilio               VARCHAR(255),
   fecha_reporte_direccion      VARCHAR(255),
-  bdc_persona_id       BIGINT,
+  bdc_persona_id               BIGINT,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE bdc_empleo(
+CREATE TABLE bdc_empleo (
   id                      BIGINT NOT NULL AUTO_INCREMENT,
   cp                      VARCHAR(255),
   base_salarial           VARCHAR(255),
@@ -169,11 +181,11 @@ CREATE TABLE bdc_empleo(
   fecha_reporto_empleo    VARCHAR(255),
   fecha_verificacion      VARCHAR(255),
   modo_verificacion       VARCHAR(255),
-  bdc_persona_id  BIGINT,
+  bdc_persona_id          BIGINT,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE bdc_encabezado(
+CREATE TABLE bdc_encabezado (
   id                                  BIGINT NOT NULL AUTO_INCREMENT,
   clave_pais                          VARCHAR(255),
   clave_unidad_monetaria              VARCHAR(255),
@@ -192,46 +204,46 @@ CREATE TABLE bdc_encabezado(
   clave_retorno_consumidor_principal  VARCHAR(255),
   clave_retorno_consumidor_secundario VARCHAR(255),
   numero_control_consulta             VARCHAR(255),
-  bdc_persona_id              BIGINT,
+  bdc_persona_id                      BIGINT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bdc_error (
-  id                     BIGINT NOT NULL AUTO_INCREMENT,
+  id             BIGINT NOT NULL AUTO_INCREMENT,
   bdc_persona_id BIGINT,
-  report_pdf_id          BIGINT,
+  report_pdf_id  BIGINT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bdc_fr (
   id                        BIGINT NOT NULL AUTO_INCREMENT,
   leyenda_reporte_bloqueado VARCHAR(255),
-  bdc_persona_id    BIGINT,
+  bdc_persona_id            BIGINT,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE bdc_hawk_alert_bdresp(
-  id                     BIGINT NOT NULL AUTO_INCREMENT,
-  codigo_clave           VARCHAR(255),
-  fecha_reporte          VARCHAR(255),
-  mensaje                VARCHAR(255),
-  tipo_institucion       VARCHAR(255),
-  bdc_persona_id BIGINT,
+CREATE TABLE bdc_hawk_alert_bdresp (
+  id               BIGINT NOT NULL AUTO_INCREMENT,
+  codigo_clave     VARCHAR(255),
+  fecha_reporte    VARCHAR(255),
+  mensaje          VARCHAR(255),
+  tipo_institucion VARCHAR(255),
+  bdc_persona_id   BIGINT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bdc_hawk_alert_consulta (
-  id                     BIGINT NOT NULL AUTO_INCREMENT,
-  codigo_clave           VARCHAR(255),
-  fecha_reporte          VARCHAR(255),
-  mensaje                VARCHAR(255),
-  tipo_institucion       VARCHAR(255),
-  bdc_persona_id BIGINT,
+  id               BIGINT NOT NULL AUTO_INCREMENT,
+  codigo_clave     VARCHAR(255),
+  fecha_reporte    VARCHAR(255),
+  mensaje          VARCHAR(255),
+  tipo_institucion VARCHAR(255),
+  bdc_persona_id   BIGINT,
   PRIMARY KEY (id)
 );
 
 
-CREATE TABLE bdc_nombre(
+CREATE TABLE bdc_nombre (
   id                                       BIGINT NOT NULL AUTO_INCREMENT,
   rfc                                      VARCHAR(255),
   apellido_adicional                       VARCHAR(255),
@@ -255,7 +267,7 @@ CREATE TABLE bdc_nombre(
   sufijo                                   VARCHAR(255),
   fecha_defuncion                          VARCHAR(255),
   fecha_recepcion_informacion_dependientes VARCHAR(255),
-  bdc_persona_id                   BIGINT,
+  bdc_persona_id                           BIGINT,
   PRIMARY KEY (id)
 );
 
@@ -267,8 +279,8 @@ CREATE TABLE bdc_persona (
 );
 
 CREATE TABLE bdc_reporte_pdf (
-  id                     BIGINT NOT NULL AUTO_INCREMENT,
-  reporte                LONGBLOB,
+  id             BIGINT NOT NULL AUTO_INCREMENT,
+  reporte        LONGBLOB,
   bdc_persona_id BIGINT,
   PRIMARY KEY (id)
 );
@@ -318,23 +330,23 @@ CREATE TABLE bdc_resumen_reporte (
   total_saldos_vencidos_pagos_fijos                    VARCHAR(255),
   total_saldos_vencidos_revolventes                    VARCHAR(255),
   total_solicitudes_reporte                            VARCHAR(255),
-  bdc_persona_id                               BIGINT,
+  bdc_persona_id                                       BIGINT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bdc_score_buro_credito (
-  id                     BIGINT NOT NULL AUTO_INCREMENT,
-  codigo_error           VARCHAR(255),
-  codigo_score           VARCHAR(255),
-  nombre_score           VARCHAR(255),
-  valor_score            VARCHAR(255),
+  id             BIGINT NOT NULL AUTO_INCREMENT,
+  codigo_error   VARCHAR(255),
+  codigo_score   VARCHAR(255),
+  nombre_score   VARCHAR(255),
+  valor_score    VARCHAR(255),
   bdc_persona_id BIGINT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bdc_codigo_razon_item (
-  id                            BIGINT NOT NULL AUTO_INCREMENT,
-  item                          VARCHAR(255),
+  id                    BIGINT NOT NULL AUTO_INCREMENT,
+  item                  VARCHAR(255),
   score_buro_credito_id BIGINT,
   PRIMARY KEY (id)
 );
@@ -447,3 +459,12 @@ ALTER TABLE bdc_response
 FOREIGN KEY (credit_id)
 REFERENCES credit (id);
 
+ALTER TABLE bdc_processing_result
+  ADD CONSTRAINT fk_fpy4cfrt07a6dkgtxeckvirmj
+FOREIGN KEY (credit_id)
+REFERENCES credit (id);
+
+ALTER TABLE bdc_processing_result
+  ADD CONSTRAINT fk_fpy2cfrt07a6dkgtxeckvirmj
+FOREIGN KEY (sql_response_id)
+REFERENCES bdc_response (id);
